@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tic-Tac-Toe — multiplayer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">⨯ ◯</span>
+      <span class="brand-name">Tic-Tac-Toe</span>
+    </div>
+    <div class="topbar-right">
+      <span id="connStatus" class="conn-pill conn-disconnected" title="WebSocket connection">
+        <span class="dot"></span><span id="connText">connecting…</span>
+      </span>
+      <span id="latencyBadge" class="latency latency-unknown" title="Round-trip time to server">
+        <span class="dot"></span>
+        <span id="latencyText">RTT: —</span>
+      </span>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- LOBBY (single column — chat lives inside the game room, not here) -->
+    <section id="lobbyWrap" class="lobby-wrap">
+      <section id="lobby" class="card lobby">
+        <h1>Multiplayer Tic-Tac-Toe</h1>
+        <p class="muted">Two players per room.</p>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="join"   role="tab" type="button">Join</button>
+          <button class="tab"        data-tab="create" role="tab" type="button">Create</button>
+          <button class="tab"        data-tab="quick"  role="tab" type="button">Quick match</button>
+        </div>
+
+        <p id="tabHint" class="tab-hint">Pick a room from the list, or type a code.</p>
+
+        <!-- Common name input (used for chat too) -->
+        <label class="name-row">
+          <span>Your name</span>
+          <input id="inputName" name="name" maxlength="32" placeholder="Alice" autocomplete="off" />
+        </label>
+
+        <!-- JOIN tab content -->
+        <div id="paneJoin" class="pane">
+          <div class="rooms-header">
+            <span class="rooms-label">Available rooms</span>
+            <button id="refreshBtn" class="icon-btn" type="button" title="Refresh now">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><polyline points="21 3 21 8 16 8"/></svg>
+            </button>
+          </div>
+          <div id="roomList" class="room-list">
+            <div class="room-empty">No rooms yet — create one or use Quick match.</div>
+          </div>
+          <details class="advanced">
+            <summary>Or join by code manually</summary>
+            <div class="manual-join">
+              <input id="manualCode" maxlength="16" placeholder="Room code" autocomplete="off" />
+              <button id="manualJoinBtn" class="ghost" type="button">Open</button>
+            </div>
+          </details>
+        </div>
+
+        <!-- CREATE tab content -->
+        <form id="createForm" class="pane hidden" autocomplete="off">
+          <label>
+            <span>Room code</span>
+            <input id="inputCreateRoom" maxlength="16" placeholder="ABCD" autocomplete="off" />
+          </label>
+          <label>
+            <span>Password <em class="hint">(optional — leave blank for public)</em></span>
+            <input id="inputCreatePassword" type="password" maxlength="64" placeholder="" autocomplete="new-password" />
+          </label>
+          <button id="createBtn" class="primary" type="submit">Create room</button>
+        </form>
+
+        <!-- QUICK tab content -->
+        <form id="quickForm" class="pane hidden" autocomplete="off">
+          <p class="muted">We'll pair you with the next available public player.</p>
+          <button id="quickBtn" class="primary" type="submit">Find a match</button>
+        </form>
+
+        <details class="advanced">
+          <summary>Server</summary>
+          <input id="inputServer" value="ws://localhost:8765" autocomplete="off" />
+        </details>
+
+        <div id="lobbyError" class="error hidden"></div>
+      </section>
+    </section>
+
+    <!-- WAITING -->
+    <section id="waiting" class="card waiting hidden">
+      <div class="spinner"></div>
+      <h2>Waiting for opponent…</h2>
+      <p class="muted">Room <span id="waitingRoom" class="kbd"></span> — share this code <span id="waitingPwTag" class="kbd-pw hidden">+ password</span>.</p>
+      <button class="ghost" id="waitingCancel" type="button">Cancel</button>
+    </section>
+
+    <!-- GAME (two-column: board + room chat) -->
+    <section id="game" class="game hidden">
+      <section class="game-main">
+        <header class="status">
+          <div class="who">
+            <div class="player you">
+              <span class="mark" id="youMark">X</span>
+              <span class="name" id="youName">You</span>
+              <span class="score" id="youScore">0</span>
+            </div>
+            <div class="vs">vs</div>
+            <div class="player opp">
+              <span class="mark" id="oppMark">O</span>
+              <span class="name" id="oppName">Opponent</span>
+              <span class="score" id="oppScore">0</span>
+            </div>
+          </div>
+          <div class="info">
+            <div class="round">Round <span id="roundNo">1</span> · Room <span id="roomLabel" class="kbd-mini"></span></div>
+            <div class="turn" id="turnLine">Your turn</div>
+          </div>
+        </header>
+
+        <div id="boardWrap" class="board-wrap">
+          <div id="board" class="board" role="grid" aria-label="Tic-Tac-Toe board"></div>
+          <svg id="winLine" class="win-line" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+        </div>
+
+        <footer class="actions">
+          <div id="banner" class="banner hidden"></div>
+          <button id="newRoundBtn" class="primary hidden" type="button">Play again</button>
+          <button id="leaveBtn" class="ghost" type="button">Leave</button>
+        </footer>
+      </section>
+
+      <aside id="chat" class="card chat">
+        <header class="chat-header">
+          <span class="chat-title">Room chat</span>
+          <span id="chatStatus" class="chat-status">—</span>
+        </header>
+        <div id="chatMessages" class="chat-messages">
+          <div class="chat-empty">Say hi to your opponent.</div>
+        </div>
+        <form id="chatForm" class="chat-form" autocomplete="off">
+          <input id="chatInput" maxlength="500" placeholder="Type a message…" autocomplete="off" />
+          <button class="primary chat-send" type="submit" title="Send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7Z"/></svg>
+          </button>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <!-- JOIN MODAL -->
+  <div id="joinModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
+    <div class="modal">
+      <button id="joinModalClose" class="modal-close" type="button" aria-label="Close">×</button>
+      <header class="modal-header">
+        <div class="modal-icon" id="joinModalIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m22 11-3 3-2-2"/></svg>
+        </div>
+        <div>
+          <h2 id="joinModalTitle">Join room</h2>
+          <p class="modal-sub"><span id="joinModalCode" class="kbd"></span> · <span id="joinModalCount">1/2</span><span id="joinModalLock" class="kbd-pw hidden">🔒 password required</span></p>
+        </div>
+      </header>
+      <form id="joinModalForm" autocomplete="off">
+        <label>
+          <span>Your name</span>
+          <input id="joinModalName" maxlength="32" required placeholder="Alice" autocomplete="off" />
+        </label>
+        <label id="joinModalPwLabel" class="hidden">
+          <span>Password</span>
+          <input id="joinModalPassword" type="password" maxlength="64" autocomplete="new-password" />
+        </label>
+        <div id="joinModalError" class="error hidden"></div>
+        <div class="modal-actions">
+          <button type="button" class="ghost" id="joinModalCancel">Cancel</button>
+          <button type="submit" class="primary">Join</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toasts" class="toasts"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
