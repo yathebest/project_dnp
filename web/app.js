@@ -1,17 +1,8 @@
-/* Tic-Tac-Toe web client.
- *
- * The WebSocket is opened on page load (not on form submit) so we can
- * subscribe to the lobby's `rooms` snapshots and chat messages while the
- * user picks an action. Room list refreshes itself when the server pushes
- * updates; the user can also tap the refresh button to ask explicitly.
- */
-
 (() => {
   "use strict";
 
   const $ = (id) => document.getElementById(id);
 
-  // ---- Element refs --------------------------------------------------
   const lobbyWrap = $("lobbyWrap");
   const lobbyEl   = $("lobby");
   const waitingEl = $("waiting");
@@ -31,7 +22,6 @@
   const manualCode = $("manualCode");
   const manualJoinBtn = $("manualJoinBtn");
 
-  const chatEl       = $("chat");
   const chatMessages = $("chatMessages");
   const chatForm     = $("chatForm");
   const chatInput    = $("chatInput");
@@ -39,7 +29,6 @@
 
   const joinModal       = $("joinModal");
   const joinModalIcon   = $("joinModalIcon");
-  const joinModalTitle  = $("joinModalTitle");
   const joinModalCode   = $("joinModalCode");
   const joinModalCount  = $("joinModalCount");
   const joinModalLock   = $("joinModalLock");
@@ -74,18 +63,15 @@
   const latencyBadge = $("latencyBadge");
   const connStatus = $("connStatus");
   const connText = $("connText");
-
   const toastsEl = $("toasts");
 
-  // ---- Persistent state ---------------------------------------------
   let ws = null;
   let wsRetryTimer = null;
   let pingTimer = null;
   let roomsRefreshTimer = null;
-  let currentTab = "join"; // "join" | "create" | "quick"
+  let currentTab = "join";
   let lastRooms = [];
-  let pendingJoinRoom = null; // {code, has_password}
-  let myConnId = null;
+  let pendingJoinRoom = null;
   let state = {
     room: null, you: null, oppNameStr: null,
     board: emptyBoard(), turn: "X", scores: { X:0, O:0, draws: 0 },
@@ -96,7 +82,6 @@
 
   function emptyBoard() { return [[null,null,null],[null,null,null],[null,null,null]]; }
 
-  // ---- Persistence (prefs only) -------------------------------------
   try {
     const saved = JSON.parse(localStorage.getItem("ttt-prefs") || "{}");
     if (saved.name)   inputName.value = saved.name;
@@ -113,7 +98,6 @@
   inputName.addEventListener("change", savePrefs);
   inputServer.addEventListener("change", () => { savePrefs(); reconnect(); });
 
-  // ---- Tabs ----------------------------------------------------------
   function setTab(name) {
     currentTab = name;
     tabsEl.querySelectorAll(".tab").forEach((t) => {
@@ -137,7 +121,6 @@
   });
   setTab(currentTab);
 
-  // ---- Build empty board --------------------------------------------
   function buildBoard() {
     boardEl.innerHTML = "";
     for (let r = 0; r < 3; r++) {
@@ -172,7 +155,6 @@
     winLineSvg.appendChild(defs);
   }
 
-  // ---- Toasts --------------------------------------------------------
   function toast(msg, kind = "") {
     const el = document.createElement("div");
     el.className = "toast" + (kind ? " " + kind : "");
@@ -185,7 +167,6 @@
     }, 4000);
   }
 
-  // ---- Connection / Latency badges ----------------------------------
   function setConn(stateName) {
     connStatus.classList.remove("conn-connected", "conn-disconnected", "conn-connecting");
     connStatus.classList.add("conn-" + stateName);
@@ -214,7 +195,6 @@
     latencyText.textContent = `RTT: ${Math.round(ms)} ms`;
   }
 
-  // ---- WebSocket -----------------------------------------------------
   function connect() {
     if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
       return;
@@ -230,7 +210,6 @@
     }
     ws.addEventListener("open", () => {
       setConn("connected");
-      myConnId = Math.random().toString(36).slice(2, 10);
       startPing();
       startRoomsRefresh();
     });
@@ -279,13 +258,12 @@
   function startRoomsRefresh() {
     stopRoomsRefresh();
     roomsRefreshTimer = setInterval(() => {
-      if (lobbyWrap.classList.contains("hidden")) return; // only while lobby visible
+      if (lobbyWrap.classList.contains("hidden")) return;
       send({ type: "list_rooms" });
     }, 5000);
   }
   function stopRoomsRefresh() { if (roomsRefreshTimer) clearInterval(roomsRefreshTimer); roomsRefreshTimer = null; }
 
-  // ---- Message dispatcher --------------------------------------------
   const LOBBY_ERROR_CODES = new Set([
     "room_not_found", "room_full", "room_exists",
     "wrong_password", "bad_room_code", "bad_password",
@@ -336,29 +314,16 @@
         if (graceTimer) { clearInterval(graceTimer); graceTimer = null; }
         break;
       case "forfeit":
-        if (msg.reason === "opponent_left") {
-          toast("Opponent left the room.", "warn");
-        } else {
-          toast("Opponent didn't return. You win by forfeit.", "ok");
-        }
+        if (msg.reason === "opponent_left") toast("Opponent left the room.", "warn");
+        else toast("Opponent didn't return. You win by forfeit.", "ok");
         if (graceTimer) { clearInterval(graceTimer); graceTimer = null; }
-        // We may need to step back to lobby on opponent_left forfeit since
-        // the server closes the room.
         break;
       case "log":
-        if (lobbyWrap.classList.contains("hidden")) {
-          toast(msg.message);
-        }
-        // If we're in lobby, the log might be "Room closed" after a forfeit
-        // — show as toast too.
-        else { toast(msg.message); }
-        if (msg.message && /room closed/i.test(msg.message)) {
-          showLobby();
-        }
+        toast(msg.message);
+        if (msg.message && /room closed/i.test(msg.message)) showLobby();
         break;
       case "error":
         if (LOBBY_ERROR_CODES.has(msg.code)) {
-          // If the join modal is open, show the error there.
           if (!joinModal.classList.contains("hidden")) {
             joinModalError.textContent = msg.message || msg.code;
             joinModalError.classList.remove("hidden");
@@ -378,7 +343,6 @@
     lobbyError.classList.remove("hidden");
   }
 
-  // ---- Render: room list --------------------------------------------
   function renderRooms() {
     refreshBtn.classList.remove("spinning");
     if (!lastRooms.length) {
@@ -437,21 +401,19 @@
     }
   }
 
-  // ---- Render: chat --------------------------------------------------
   function renderChatHistory(messages) {
     chatMessages.innerHTML = "";
     if (!messages.length) {
       const empty = document.createElement("div");
       empty.className = "chat-empty";
-      empty.textContent = "Say hi to other players waiting for a match.";
+      empty.textContent = "Say hi to your opponent.";
       chatMessages.appendChild(empty);
       return;
     }
-    for (const m of messages) appendChatMessage(m, /*scroll=*/false);
+    for (const m of messages) appendChatMessage(m, false);
     scrollChatToBottom();
   }
   function appendChatMessage(msg, scroll = true) {
-    // Remove the empty placeholder if present.
     const empty = chatMessages.querySelector(".chat-empty");
     if (empty) empty.remove();
 
@@ -491,7 +453,6 @@
     chatMessages.appendChild(empty);
   }
 
-  // ---- Game render --------------------------------------------------
   function render() {
     roundNoEl.textContent = state.round;
     roomLabel.textContent = state.room || "";
@@ -537,7 +498,7 @@
         banner.textContent = "It's a draw.";
         banner.classList.add("draw");
       } else if (state.winner === state.you) {
-        banner.textContent = "🎉 You win this round!";
+        banner.textContent = "You win this round!";
         banner.classList.add("win");
       } else {
         banner.textContent = "You lost this round.";
@@ -575,7 +536,6 @@
     }, 1000);
   }
 
-  // ---- Join modal ----------------------------------------------------
   function openJoinModal(room) {
     pendingJoinRoom = room;
     joinModalCode.textContent = room.code;
@@ -617,7 +577,11 @@
     ev.preventDefault();
     if (!pendingJoinRoom) return;
     const name = joinModalName.value.trim();
-    if (!name) { joinModalError.textContent = "Please enter a name."; joinModalError.classList.remove("hidden"); return; }
+    if (!name) {
+      joinModalError.textContent = "Please enter a name.";
+      joinModalError.classList.remove("hidden");
+      return;
+    }
     state.name = name;
     inputName.value = name;
     savePrefs();
@@ -626,7 +590,11 @@
     const msg = { type: "join", name, room: pendingJoinRoom.code };
     if (pendingJoinRoom.has_password) {
       const pw = joinModalPassword.value;
-      if (!pw) { joinModalError.textContent = "Password required."; joinModalError.classList.remove("hidden"); return; }
+      if (!pw) {
+        joinModalError.textContent = "Password required.";
+        joinModalError.classList.remove("hidden");
+        return;
+      }
       msg.password = pw;
     }
     if (!send(msg)) {
@@ -638,17 +606,13 @@
     showWaiting();
   });
 
-  // ---- Manual join (by code) ----------------------------------------
   manualJoinBtn.addEventListener("click", () => {
     const code = manualCode.value.trim().toUpperCase();
     if (!code) return;
-    // Look up in known rooms to know whether password is required;
-    // if not in list, assume no password and let server tell us if wrong.
     const found = lastRooms.find((r) => r.code === code);
     openJoinModal(found || { code, players: 0, max: 2, has_password: false, joinable: true });
   });
 
-  // ---- Create form --------------------------------------------------
   createForm.addEventListener("submit", (ev) => {
     ev.preventDefault();
     lobbyError.classList.add("hidden");
@@ -666,7 +630,6 @@
     showWaiting();
   });
 
-  // ---- Quick form ---------------------------------------------------
   quickForm.addEventListener("submit", (ev) => {
     ev.preventDefault();
     lobbyError.classList.add("hidden");
@@ -679,14 +642,12 @@
     showWaiting();
   });
 
-  // ---- Refresh button ----------------------------------------------
   refreshBtn.addEventListener("click", () => {
     refreshBtn.classList.add("spinning");
     setTimeout(() => refreshBtn.classList.remove("spinning"), 600);
     send({ type: "list_rooms" });
   });
 
-  // ---- Chat form (only effective when seated in a room) -------------
   chatForm.addEventListener("submit", (ev) => {
     ev.preventDefault();
     const text = chatInput.value.trim();
@@ -702,7 +663,6 @@
     chatInput.value = "";
   });
 
-  // ---- Game interactions --------------------------------------------
   function onCellClick(ev) {
     const cell = ev.currentTarget;
     if (cell.classList.contains("taken") || cell.classList.contains("disabled")) return;
@@ -728,7 +688,6 @@
     showLobby();
   });
 
-  // ---- Section visibility --------------------------------------------
   function showLobby() {
     lobbyWrap.classList.remove("hidden");
     waitingEl.classList.add("hidden");
@@ -742,7 +701,6 @@
     state.winner = null;
     state.line = null;
     clearChat();
-    // Ask server for fresh rooms snapshot upon return.
     send({ type: "list_rooms" });
   }
   function showWaiting() {
@@ -752,7 +710,6 @@
     waitingRoom.textContent = state.room || "auto-match";
     const room = lastRooms.find((r) => r.code === state.room);
     waitingPwTag.classList.toggle("hidden", !(room && room.has_password));
-    // Reset chat panel (it'll be repopulated when the second player joins).
     clearChat();
   }
   function showGame() {
@@ -762,7 +719,6 @@
     chatStatus.textContent = state.oppNameStr || "alone";
   }
 
-  // ---- Init ----------------------------------------------------------
   buildBoard();
   setConn("connecting");
   setLatency(null);

@@ -1,26 +1,15 @@
-"""
-Negative-path tests for the new lobby protocol:
-  * `room_exists` when creating a room that already exists
-  * `room_not_found` when joining a non-existent room
-  * `room_full` when joining a 2-player room as a third player
-  * `wrong_password` when joining a locked room with no/bad password
-  * Successful join with the correct password
-"""
-from __future__ import annotations
-
 import argparse
 import asyncio
 import json
 import sys
-from typing import Optional
 
 
-async def send_json(w: asyncio.StreamWriter, msg: dict) -> None:
+async def send_json(w, msg):
     w.write((json.dumps(msg) + "\n").encode("utf-8"))
     await w.drain()
 
 
-async def read_json(r: asyncio.StreamReader, timeout: float = 2.0) -> Optional[dict]:
+async def read_json(r, timeout=2.0):
     try:
         line = await asyncio.wait_for(r.readline(), timeout=timeout)
     except asyncio.TimeoutError:
@@ -33,9 +22,7 @@ async def read_json(r: asyncio.StreamReader, timeout: float = 2.0) -> Optional[d
         return None
 
 
-async def read_until(
-    r: asyncio.StreamReader, want_type: str, timeout: float = 2.0
-) -> Optional[dict]:
+async def read_until(r, want_type, timeout=2.0):
     import time
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -60,46 +47,47 @@ async def close_(*ws):
             pass
 
 
-async def case_room_exists(host, port) -> None:
+async def case_room_exists(host, port):
     print("* create-then-create same code -> room_exists")
     a_r, a_w = await open_(host, port)
     b_r, b_w = await open_(host, port)
     await send_json(a_w, {"type": "create", "name": "A", "room": "EXIST"})
-    j = await read_until(a_r, "joined", 2.0); assert j is not None, "A no joined"
+    j = await read_until(a_r, "joined", 2.0)
+    assert j is not None, "A no joined"
     await send_json(b_w, {"type": "create", "name": "B", "room": "EXIST"})
     err = await read_until(b_r, "error", 2.0)
-    assert err and err.get("code") == "room_exists", f"expected room_exists, got {err}"
-    print(f"  got code={err['code']} message={err['message']!r}  [OK]")
+    assert err and err.get("code") == "room_exists", "expected room_exists, got %r" % err
+    print("  got code=%s message=%r  [OK]" % (err["code"], err["message"]))
     await close_(a_w, b_w)
 
 
-async def case_room_not_found(host, port) -> None:
+async def case_room_not_found(host, port):
     print("* join non-existent room -> room_not_found")
     r, w = await open_(host, port)
     await send_json(w, {"type": "join", "name": "Ghost", "room": "NOPE9X"})
     err = await read_until(r, "error", 2.0)
-    assert err and err.get("code") == "room_not_found", f"expected room_not_found, got {err}"
-    print(f"  got code={err['code']}  [OK]")
+    assert err and err.get("code") == "room_not_found", "expected room_not_found, got %r" % err
+    print("  got code=%s  [OK]" % err["code"])
     await close_(w)
 
 
-async def case_room_full(host, port) -> None:
+async def case_room_full(host, port):
     print("* join a 2-player room as third -> room_full")
     a_r, a_w = await open_(host, port)
     b_r, b_w = await open_(host, port)
     c_r, c_w = await open_(host, port)
     await send_json(a_w, {"type": "create", "name": "A", "room": "FULL"})
     await read_until(a_r, "joined", 2.0)
-    await send_json(b_w, {"type": "join",   "name": "B", "room": "FULL"})
+    await send_json(b_w, {"type": "join", "name": "B", "room": "FULL"})
     await read_until(b_r, "joined", 2.0)
-    await send_json(c_w, {"type": "join",   "name": "C", "room": "FULL"})
+    await send_json(c_w, {"type": "join", "name": "C", "room": "FULL"})
     err = await read_until(c_r, "error", 2.0)
-    assert err and err.get("code") == "room_full", f"expected room_full, got {err}"
-    print(f"  got code={err['code']}  [OK]")
+    assert err and err.get("code") == "room_full", "expected room_full, got %r" % err
+    print("  got code=%s  [OK]" % err["code"])
     await close_(a_w, b_w, c_w)
 
 
-async def case_password_flow(host, port) -> None:
+async def case_password_flow(host, port):
     print("* password-protected room")
     a_r, a_w = await open_(host, port)
     b_r, b_w = await open_(host, port)
@@ -107,31 +95,28 @@ async def case_password_flow(host, port) -> None:
     d_r, d_w = await open_(host, port)
     await send_json(a_w, {"type": "create", "name": "A", "room": "VIP", "password": "s3cret"})
     j = await read_until(a_r, "joined", 2.0)
-    assert j and j.get("has_password") is True, f"expected has_password=True, got {j}"
-    print(f"  A created VIP with password (has_password={j.get('has_password')})  [OK]")
+    assert j and j.get("has_password") is True, "expected has_password=True, got %r" % j
+    print("  A created VIP with password (has_password=%s)  [OK]" % j.get("has_password"))
 
-    # Wrong password
     await send_json(b_w, {"type": "join", "name": "B", "room": "VIP", "password": "wrong"})
     err = await read_until(b_r, "error", 2.0)
-    assert err and err.get("code") == "wrong_password", f"expected wrong_password, got {err}"
-    print(f"  B with wrong password: code={err['code']}  [OK]")
+    assert err and err.get("code") == "wrong_password"
+    print("  B with wrong password: code=%s  [OK]" % err["code"])
 
-    # No password at all
     await send_json(c_w, {"type": "join", "name": "C", "room": "VIP"})
     err = await read_until(c_r, "error", 2.0)
-    assert err and err.get("code") == "wrong_password", f"expected wrong_password, got {err}"
-    print(f"  C with no password: code={err['code']}  [OK]")
+    assert err and err.get("code") == "wrong_password"
+    print("  C with no password: code=%s  [OK]" % err["code"])
 
-    # Correct password
     await send_json(d_w, {"type": "join", "name": "D", "room": "VIP", "password": "s3cret"})
     j = await read_until(d_r, "joined", 2.0)
-    assert j and j.get("you") in ("X", "O"), f"D did not join, got {j}"
-    print(f"  D with correct password: joined as {j.get('you')}  [OK]")
+    assert j and j.get("you") in ("X", "O"), "D did not join, got %r" % j
+    print("  D with correct password: joined as %s  [OK]" % j.get("you"))
 
     await close_(a_w, b_w, c_w, d_w)
 
 
-async def case_auto_match(host, port) -> None:
+async def case_auto_match(host, port):
     print("* auto-match pairs two clients into one room")
     a_r, a_w = await open_(host, port)
     b_r, b_w = await open_(host, port)
@@ -141,12 +126,13 @@ async def case_auto_match(host, port) -> None:
     await send_json(b_w, {"type": "auto", "name": "AutoB"})
     j_b = await read_until(b_r, "joined", 2.0)
     assert j_b, "B did not get joined from auto"
-    assert j_a["room"] == j_b["room"], f"auto-match did not pair them ({j_a['room']} vs {j_b['room']})"
-    print(f"  paired in room {j_a['room']}  [OK]")
+    assert j_a["room"] == j_b["room"], "auto-match did not pair them (%s vs %s)" % (
+        j_a["room"], j_b["room"])
+    print("  paired in room %s  [OK]" % j_a["room"])
     await close_(a_w, b_w)
 
 
-async def main_async(host: str, port: int) -> int:
+async def main_async(host, port):
     await case_room_exists(host, port)
     await case_room_not_found(host, port)
     await case_room_full(host, port)
@@ -155,19 +141,18 @@ async def main_async(host: str, port: int) -> int:
     return 0
 
 
-def main() -> None:
-    p = argparse.ArgumentParser()
-    p.add_argument("--host", default="127.0.0.1")
-    p.add_argument("--port", type=int, default=5555)
-    args = p.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--port", type=int, default=5555)
+    args = parser.parse_args()
     try:
         rc = asyncio.run(main_async(args.host, args.port))
     except AssertionError as e:
-        print(f"\nFAIL: {e}"); sys.exit(1)
+        print("\nFAIL: %s" % e)
+        sys.exit(1)
     except Exception as e:
-        print(f"\nERROR: {e}"); sys.exit(2)
-    print("\nPASS"); sys.exit(rc)
-
-
-if __name__ == "__main__":
-    main()
+        print("\nERROR: %s" % e)
+        sys.exit(2)
+    print("\nPASS")
+    sys.exit(rc)
