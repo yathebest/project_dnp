@@ -33,6 +33,8 @@
   const joinModalCount  = $("joinModalCount");
   const joinModalLock   = $("joinModalLock");
   const joinModalPwLabel = $("joinModalPwLabel");
+  const joinModalCodeLabel = $("joinModalCodeLabel");
+  const joinModalCodeInput = $("joinModalCodeInput");
   const joinModalForm   = $("joinModalForm");
   const joinModalName   = $("joinModalName");
   const joinModalPassword = $("joinModalPassword");
@@ -54,6 +56,8 @@
   const oppScore = $("oppScore");
   const roomLabel = $("roomLabel");
   const roundNoEl = $("roundNo");
+  const rejoinCodeLine = $("rejoinCodeLine");
+  const rejoinCodeVal = $("rejoinCodeVal");
   const turnLine = $("turnLine");
   const banner = $("banner");
   const newRoundBtn = $("newRoundBtn");
@@ -72,6 +76,25 @@
   let currentTab = "join";
   let lastRooms = [];
   let pendingJoinRoom = null;
+  function getRejoinCode(roomCode) {
+    try {
+      const all = JSON.parse(sessionStorage.getItem("ttt-rejoin") || "{}");
+      return all[roomCode] || null;
+    } catch { return null; }
+  }
+  function setRejoinCode(roomCode, code) {
+    try {
+      const all = JSON.parse(sessionStorage.getItem("ttt-rejoin") || "{}");
+      if (code) all[roomCode] = code;
+      else delete all[roomCode];
+      sessionStorage.setItem("ttt-rejoin", JSON.stringify(all));
+    } catch {}
+  }
+  function getAllRejoinCodes() {
+    try { return JSON.parse(sessionStorage.getItem("ttt-rejoin") || "{}"); }
+    catch { return {}; }
+  }
+
   let state = {
     room: null, you: null, oppNameStr: null,
     board: emptyBoard(), turn: "X", scores: { X:0, O:0, draws: 0 },
@@ -298,6 +321,10 @@
         state.you  = msg.you ?? state.you;
         state.oppNameStr = msg.opponent ?? state.oppNameStr;
         state.oppConnected = msg.opponent_connected !== false;
+        if (msg.rejoin_code && state.room) {
+          state.rejoinCode = msg.rejoin_code;
+          setRejoinCode(state.room, msg.rejoin_code);
+        }
         if (graceTimer) { clearInterval(graceTimer); graceTimer = null; }
         showGame();
         render();
@@ -354,9 +381,16 @@
       return;
     }
     roomListEl.innerHTML = "";
+    const codes = getAllRejoinCodes();
     for (const r of lastRooms) {
+      const haveCode = !!codes[r.code];
+      const inGrace = r.in_grace === true;
+      const canPick = r.joinable || inGrace;
+      const isMine = inGrace && haveCode;
       const row = document.createElement("div");
-      row.className = "room-row" + (r.joinable ? "" : " full");
+      row.className = "room-row"
+        + (canPick ? "" : " full")
+        + (isMine ? " mine" : "");
       row.tabIndex = 0;
       row.dataset.code = r.code;
       row.dataset.hasPassword = r.has_password ? "1" : "0";
@@ -366,7 +400,17 @@
       code.textContent = r.code;
       row.appendChild(code);
 
-      if (r.in_progress) {
+      if (isMine) {
+        const mb = document.createElement("span");
+        mb.className = "badge mine-badge";
+        mb.textContent = "your seat";
+        row.appendChild(mb);
+      } else if (inGrace) {
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = "rejoin only";
+        row.appendChild(badge);
+      } else if (r.in_progress) {
         const badge = document.createElement("span");
         badge.className = "badge";
         badge.textContent = "in progress";
@@ -382,12 +426,12 @@
       }
 
       const count = document.createElement("span");
-      count.className = "count" + (r.joinable ? "" : " full-tag");
+      count.className = "count" + (canPick ? "" : " full-tag");
       count.textContent = `${r.players}/${r.max}`;
       row.appendChild(count);
 
       const onPick = () => {
-        if (!r.joinable) {
+        if (!canPick) {
           toast("Room is full.", "warn");
           return;
         }
@@ -456,6 +500,12 @@
   function render() {
     roundNoEl.textContent = state.round;
     roomLabel.textContent = state.room || "";
+    if (state.rejoinCode) {
+      rejoinCodeVal.textContent = state.rejoinCode;
+      rejoinCodeLine.classList.remove("hidden");
+    } else {
+      rejoinCodeLine.classList.add("hidden");
+    }
     youMark.textContent = state.you ?? "?";
     oppMark.textContent = state.you === "X" ? "O" : (state.you === "O" ? "X" : "?");
     youName.textContent = state.name || "You";
@@ -538,24 +588,39 @@
 
   function openJoinModal(room) {
     pendingJoinRoom = room;
+    const inGrace = room.in_grace === true;
+    const savedCode = inGrace ? getRejoinCode(room.code) : null;
+    const isMine = inGrace && !!savedCode;
     joinModalCode.textContent = room.code;
     joinModalCount.textContent = `${room.players}/${room.max}`;
-    if (room.has_password) {
+    const title = document.getElementById("joinModalTitle");
+    if (title) title.textContent = inGrace
+      ? (isMine ? "Rejoin your seat" : "Rejoin (need code)")
+      : "Join room";
+    const showPwField = !!room.has_password && !inGrace;
+    if (inGrace) {
       joinModalLock.classList.remove("hidden");
-      joinModalLock.textContent = "🔒 password required";
-      joinModalPwLabel.classList.remove("hidden");
+      joinModalLock.textContent = isMine ? "your seat" : "rejoin code required";
+      joinModalIcon.classList.add("locked");
+    } else if (room.has_password) {
+      joinModalLock.classList.remove("hidden");
+      joinModalLock.textContent = "password required";
       joinModalIcon.classList.add("locked");
     } else {
       joinModalLock.classList.add("hidden");
-      joinModalPwLabel.classList.add("hidden");
       joinModalIcon.classList.remove("locked");
     }
+    joinModalPwLabel.classList.toggle("hidden", !showPwField);
+    const showCodeField = inGrace;
+    if (joinModalCodeLabel) joinModalCodeLabel.classList.toggle("hidden", !showCodeField);
+    if (joinModalCodeInput) joinModalCodeInput.value = savedCode || "";
     joinModalError.classList.add("hidden");
     joinModalName.value = inputName.value;
     joinModalPassword.value = "";
     joinModal.classList.remove("hidden");
     setTimeout(() => {
-      if (room.has_password) joinModalPassword.focus();
+      if (showCodeField && !savedCode) joinModalCodeInput.focus();
+      else if (showPwField) joinModalPassword.focus();
       else if (!joinModalName.value) joinModalName.focus();
       else joinModal.querySelector("button[type=submit]").focus();
     }, 60);
@@ -588,7 +653,16 @@
     state.room = pendingJoinRoom.code;
 
     const msg = { type: "join", name, room: pendingJoinRoom.code };
-    if (pendingJoinRoom.has_password) {
+    const inGrace = pendingJoinRoom.in_grace === true;
+    if (inGrace) {
+      const code = (joinModalCodeInput.value || "").trim();
+      if (!code) {
+        joinModalError.textContent = "Rejoin code required.";
+        joinModalError.classList.remove("hidden");
+        return;
+      }
+      msg.rejoin_code = code;
+    } else if (pendingJoinRoom.has_password) {
       const pw = joinModalPassword.value;
       if (!pw) {
         joinModalError.textContent = "Password required.";
@@ -684,6 +758,7 @@
   });
 
   leaveBtn.addEventListener("click", () => {
+    if (state.room) setRejoinCode(state.room, null);
     send({ type: "leave" });
     showLobby();
   });
@@ -700,6 +775,7 @@
     state.round = 1;
     state.winner = null;
     state.line = null;
+    state.rejoinCode = null;
     clearChat();
     send({ type: "list_rooms" });
   }

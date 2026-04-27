@@ -1,448 +1,59 @@
-2026-04-27 17:33:30.527 [INFO] TCP listening on 0.0.0.0:5555
-2026-04-27 17:33:30.542 [INFO] server listening on 0.0.0.0:8765
-2026-04-27 17:33:30.542 [INFO] WS  listening on 0.0.0.0:8765
-2026-04-27 17:33:43.433 [INFO] CONNECT transport=tcp peer=127.0.0.1:61243 pid=94e2a851
-2026-04-27 17:33:43.433 [INFO] CONNECT transport=tcp peer=127.0.0.1:61244 pid=45974bda
-2026-04-27 17:33:43.433 [INFO] ROOM CREATED room=EXIST password=no
-2026-04-27 17:33:43.433 [INFO] JOIN room=EXIST name=A mark=X transport=tcp peer=127.0.0.1:61243
-2026-04-27 17:33:43.434 [INFO] DISCONNECT name=A room=EXIST mark=X
-2026-04-27 17:33:43.434 [INFO] ROOM CLOSED room=EXIST reason=empty
-2026-04-27 17:33:43.435 [INFO] DISCONNECT name=B room=- mark=None
-2026-04-27 17:33:43.435 [INFO] CONNECT transport=tcp peer=127.0.0.1:61245 pid=77ad1064
-2026-04-27 17:33:43.435 [INFO] DISCONNECT name=Ghost room=- mark=None
-2026-04-27 17:33:43.436 [INFO] CONNECT transport=tcp peer=127.0.0.1:61246 pid=f2baac11
-2026-04-27 17:33:43.436 [INFO] CONNECT transport=tcp peer=127.0.0.1:61247 pid=55893af4
-2026-04-27 17:33:43.436 [INFO] CONNECT transport=tcp peer=127.0.0.1:61248 pid=2179bb9d
-2026-04-27 17:33:43.436 [INFO] ROOM CREATED room=FULL password=no
-2026-04-27 17:33:43.436 [INFO] JOIN room=FULL name=A mark=X transport=tcp peer=127.0.0.1:61246
-2026-04-27 17:33:43.437 [INFO] JOIN room=FULL name=B mark=O transport=tcp peer=127.0.0.1:61247
-2026-04-27 17:33:43.437 [INFO] ROUND 1 STARTED room=FULL
-2026-04-27 17:33:43.437 [INFO] SYNC room=FULL round=1 turn=X move=- recipients=2 fanout_ms=0.11
-2026-04-27 17:33:43.438 [INFO] DISCONNECT name=C room=- mark=None
-2026-04-27 17:33:43.439 [INFO] DISCONNECT name=B room=FULL mark=O
-2026-04-27 17:33:43.439 [INFO] DISCONNECT name=A room=FULL mark=X
-2026-04-27 17:33:43.439 [INFO] ROOM CLOSED room=FULL reason=empty
-2026-04-27 17:33:43.439 [INFO] CONNECT transport=tcp peer=127.0.0.1:61249 pid=533abd3a
-2026-04-27 17:33:43.440 [INFO] ROOM CREATED room=VIP password=yes
-2026-04-27 17:33:43.440 [INFO] JOIN room=VIP name=A mark=X transport=tcp peer=127.0.0.1:61249
-2026-04-27 17:33:43.440 [INFO] CONNECT transport=tcp peer=127.0.0.1:61250 pid=f1566584
-2026-04-27 17:33:43.440 [INFO] CONNECT transport=tcp peer=127.0.0.1:61251 pid=38de0741
-2026-04-27 17:33:43.440 [INFO] CONNECT transport=tcp peer=127.0.0.1:61252 pid=345a4a4c
-2026-04-27 17:33:43.441 [INFO] JOIN room=VIP name=D mark=O transport=tcp peer=127.0.0.1:61252
-2026-04-27 17:33:43.441 [INFO] ROUND 1 STARTED room=VIP
-2026-04-27 17:33:43.441 [INFO] SYNC room=VIP round=1 turn=X move=- recipients=2 fanout_ms=0.11
-2026-04-27 17:33:43.441 [INFO] DISCONNECT name=A room=VIP mark=X
-2026-04-27 17:33:43.442 [INFO] DISCONNECT name=B room=- mark=None
-2026-04-27 17:33:43.442 [INFO] DISCONNECT name=C room=- mark=None
-2026-04-27 17:33:43.442 [INFO] DISCONNECT name=D room=VIP mark=O
-2026-04-27 17:33:43.442 [INFO] ROOM CLOSED room=VIP reason=empty
-2026-04-27 17:33:43.442 [INFO] CONNECT transport=tcp peer=127.0.0.1:61253 pid=8d1fa647
-2026-04-27 17:33:43.442 [INFO] ROOM CREATED room=D4MM password=no reason=auto
-2026-04-27 17:33:43.442 [INFO] JOIN room=D4MM name=AutoA mark=X transport=tcp peer=127.0.0.1:61253
-2026-04-27 17:33:43.442 [INFO] CONNECT transport=tcp peer=127.0.0.1:61254 pid=3feaf335
-2026-04-27 17:33:43.443 [INFO] JOIN room=D4MM name=AutoB mark=O transport=tcp peer=127.0.0.1:61254
-2026-04-27 17:33:43.443 [INFO] ROUND 1 STARTED room=D4MM
-2026-04-27 17:33:43.443 [INFO] DISCONNECT name=AutoA room=D4MM mark=X
-2026-04-27 17:33:43.443 [INFO] SYNC room=D4MM round=1 turn=X move=- recipients=2 fanout_ms=0.20
-2026-04-27 17:33:43.443 [INFO] DISCONNECT name=AutoB room=D4MM mark=O
-2026-04-27 17:33:43.443 [INFO] ROOM CLOSED room=D4MM reason=empty
-2026-04-27 17:33:43.553 [INFO] CONNECT transport=tcp peer=127.0.0.1:61257 pid=1e644604
-2026-04-27 17:33:43.553 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.553 [INFO] CONNECT transport=tcp peer=127.0.0.1:61259 pid=73e1c5ad
-2026-04-27 17:33:43.554 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.554 [INFO] CONNECT transport=tcp peer=127.0.0.1:61260 pid=de06872d
-2026-04-27 17:33:43.555 [INFO] CONNECT transport=tcp peer=127.0.0.1:61261 pid=351852a9
-2026-04-27 17:33:43.555 [INFO] ROOM CREATED room=PUSH1 password=yes
-2026-04-27 17:33:43.555 [INFO] JOIN room=PUSH1 name=A mark=X transport=tcp peer=127.0.0.1:61261
-2026-04-27 17:33:43.556 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.556 [INFO] DISCONNECT name=A room=PUSH1 mark=X
-2026-04-27 17:33:43.556 [INFO] ROOM CLOSED room=PUSH1 reason=empty
-2026-04-27 17:33:43.556 [INFO] CONNECT transport=tcp peer=127.0.0.1:61262 pid=ba648169
-2026-04-27 17:33:43.557 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.557 [INFO] CONNECT transport=tcp peer=127.0.0.1:61263 pid=f776f1e3
-2026-04-27 17:33:43.558 [INFO] CONNECT transport=tcp peer=127.0.0.1:61264 pid=a687df53
-2026-04-27 17:33:43.558 [INFO] ROOM CREATED room=CHAT1 password=no
-2026-04-27 17:33:43.558 [INFO] JOIN room=CHAT1 name=Alice mark=X transport=tcp peer=127.0.0.1:61263
-2026-04-27 17:33:43.558 [INFO] JOIN room=CHAT1 name=Bob mark=O transport=tcp peer=127.0.0.1:61264
-2026-04-27 17:33:43.558 [INFO] ROUND 1 STARTED room=CHAT1
-2026-04-27 17:33:43.558 [INFO] SYNC room=CHAT1 round=1 turn=X move=- recipients=2 fanout_ms=0.06
-2026-04-27 17:33:43.559 [INFO] CHAT room=CHAT1 nickname=Alice text=hi from inside
-2026-04-27 17:33:43.559 [INFO] DISCONNECT name=Alice room=CHAT1 mark=X
-2026-04-27 17:33:43.559 [INFO] DISCONNECT name=Bob room=CHAT1 mark=O
-2026-04-27 17:33:43.559 [INFO] ROOM CLOSED room=CHAT1 reason=empty
-2026-04-27 17:33:43.559 [INFO] CONNECT transport=tcp peer=127.0.0.1:61265 pid=e5280a11
-2026-04-27 17:33:43.559 [INFO] ROOM CREATED room=CHAT2 password=no
-2026-04-27 17:33:43.560 [INFO] JOIN room=CHAT2 name=Alice mark=X transport=tcp peer=127.0.0.1:61265
-2026-04-27 17:33:43.560 [INFO] CHAT room=CHAT2 nickname=Alice text=earliest
-2026-04-27 17:33:43.560 [INFO] CONNECT transport=tcp peer=127.0.0.1:61266 pid=58bed366
-2026-04-27 17:33:43.560 [INFO] JOIN room=CHAT2 name=Bob mark=O transport=tcp peer=127.0.0.1:61266
-2026-04-27 17:33:43.560 [INFO] ROUND 1 STARTED room=CHAT2
-2026-04-27 17:33:43.561 [INFO] SYNC room=CHAT2 round=1 turn=X move=- recipients=2 fanout_ms=0.10
-2026-04-27 17:33:43.561 [INFO] DISCONNECT name=Alice room=CHAT2 mark=X
-2026-04-27 17:33:43.561 [INFO] DISCONNECT name=Bob room=CHAT2 mark=O
-2026-04-27 17:33:43.561 [INFO] ROOM CLOSED room=CHAT2 reason=empty
-2026-04-27 17:33:43.561 [INFO] CONNECT transport=tcp peer=127.0.0.1:61267 pid=91e19723
-2026-04-27 17:33:43.562 [INFO] CONNECT transport=tcp peer=127.0.0.1:61268 pid=8220686c
-2026-04-27 17:33:43.562 [INFO] CONNECT transport=tcp peer=127.0.0.1:61269 pid=2ec94db6
-2026-04-27 17:33:43.562 [INFO] ROOM CREATED room=STAYS password=no
-2026-04-27 17:33:43.562 [INFO] JOIN room=STAYS name=Alice mark=X transport=tcp peer=127.0.0.1:61267
-2026-04-27 17:33:43.563 [INFO] JOIN room=STAYS name=Bob mark=O transport=tcp peer=127.0.0.1:61268
-2026-04-27 17:33:43.563 [INFO] ROUND 1 STARTED room=STAYS
-2026-04-27 17:33:43.563 [INFO] LEAVE name=Alice room=STAYS mark=X
-2026-04-27 17:33:43.563 [INFO] ROOM RESET room=STAYS reason=opponent_left survivor=Bob
-2026-04-27 17:33:43.563 [INFO] SYNC room=STAYS round=1 turn=X move=- recipients=1 fanout_ms=0.02
-2026-04-27 17:33:43.564 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.564 [INFO] DISCONNECT name=Bob room=STAYS mark=O
-2026-04-27 17:33:43.564 [INFO] ROOM CLOSED room=STAYS reason=empty
-2026-04-27 17:33:43.564 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:43.666 [INFO] CONNECT transport=tcp peer=127.0.0.1:61272 pid=dc2c9284
-2026-04-27 17:33:43.666 [INFO] CONNECT transport=tcp peer=127.0.0.1:61273 pid=e15bc4bf
-2026-04-27 17:33:43.666 [INFO] ROOM CREATED room=DC password=no
-2026-04-27 17:33:43.666 [INFO] JOIN room=DC name=Alice mark=X transport=tcp peer=127.0.0.1:61272
-2026-04-27 17:33:43.667 [INFO] JOIN room=DC name=Bob mark=O transport=tcp peer=127.0.0.1:61273
-2026-04-27 17:33:43.667 [INFO] ROUND 1 STARTED room=DC
-2026-04-27 17:33:43.667 [INFO] SYNC room=DC round=1 turn=X move=- recipients=2 fanout_ms=0.07
-2026-04-27 17:33:43.667 [INFO] SYNC room=DC round=1 turn=O move=(0,0) recipients=2 fanout_ms=0.09
-2026-04-27 17:33:43.667 [INFO] MOVE room=DC round=1 by=X cell=(0,0) move_to_broadcast_ms=0.15
-2026-04-27 17:33:43.667 [INFO] SYNC room=DC round=1 turn=X move=(1,1) recipients=2 fanout_ms=0.08
-2026-04-27 17:33:43.667 [INFO] MOVE room=DC round=1 by=O cell=(1,1) move_to_broadcast_ms=0.13
-2026-04-27 17:33:43.668 [INFO] DISCONNECT name=Alice room=DC mark=X
-2026-04-27 17:33:58.562 [INFO] ROOM CLOSED room=CHAT2 reason=both_left
-2026-04-27 17:33:58.669 [INFO] ROOM RESET room=DC reason=grace_expired survivor=Bob
-2026-04-27 17:33:58.671 [INFO] CONNECT transport=tcp peer=127.0.0.1:61277 pid=a517d6f2
-2026-04-27 17:33:58.671 [INFO] DISCONNECT name=Bob room=DC mark=O
-2026-04-27 17:33:58.671 [INFO] ROOM CLOSED room=DC reason=empty
-2026-04-27 17:33:58.671 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:33:58.776 [INFO] CONNECT transport=tcp peer=127.0.0.1:61281 pid=61c103a4
-2026-04-27 17:33:58.777 [INFO] CONNECT transport=tcp peer=127.0.0.1:61282 pid=8ed28f40
-2026-04-27 17:33:58.777 [INFO] ROOM CREATED room=RC password=no
-2026-04-27 17:33:58.777 [INFO] JOIN room=RC name=Alice mark=X transport=tcp peer=127.0.0.1:61281
-2026-04-27 17:33:58.777 [INFO] JOIN room=RC name=Bob mark=O transport=tcp peer=127.0.0.1:61282
-2026-04-27 17:33:58.777 [INFO] ROUND 1 STARTED room=RC
-2026-04-27 17:33:58.778 [INFO] SYNC room=RC round=1 turn=X move=- recipients=2 fanout_ms=0.11
-2026-04-27 17:33:58.778 [INFO] SYNC room=RC round=1 turn=O move=(1,1) recipients=2 fanout_ms=0.09
-2026-04-27 17:33:58.778 [INFO] MOVE room=RC round=1 by=X cell=(1,1) move_to_broadcast_ms=0.15
-2026-04-27 17:33:58.778 [INFO] DISCONNECT name=Alice room=RC mark=X
-2026-04-27 17:33:58.778 [INFO] CONNECT transport=tcp peer=127.0.0.1:61283 pid=bea27976
-2026-04-27 17:33:58.779 [INFO] RECONNECT room=RC name=Alice mark=X
-2026-04-27 17:33:58.779 [INFO] SYNC room=RC round=1 turn=O move=- recipients=2 fanout_ms=0.02
-2026-04-27 17:33:58.779 [INFO] DISCONNECT name=Alice room=RC mark=X
-2026-04-27 17:33:58.779 [INFO] DISCONNECT name=Bob room=RC mark=O
-2026-04-27 17:33:58.779 [INFO] ROOM CLOSED room=RC reason=empty
-2026-04-27 17:33:58.920 [INFO] CONNECT transport=tcp peer=127.0.0.1:61286 pid=c9333913
-2026-04-27 17:33:58.920 [INFO] CONNECT transport=tcp peer=127.0.0.1:61287 pid=2eac7c17
-2026-04-27 17:33:58.920 [INFO] CONNECT transport=tcp peer=127.0.0.1:61288 pid=382f2779
-2026-04-27 17:33:58.921 [INFO] ROOM CREATED room=L0 password=no
-2026-04-27 17:33:58.921 [INFO] JOIN room=L0 name=bot0 mark=X transport=tcp peer=127.0.0.1:61286
-2026-04-27 17:33:58.921 [INFO] ROOM CREATED room=L1 password=no
-2026-04-27 17:33:58.921 [INFO] JOIN room=L1 name=bot2 mark=X transport=tcp peer=127.0.0.1:61287
-2026-04-27 17:33:58.921 [INFO] ROOM CREATED room=L2 password=no
-2026-04-27 17:33:58.921 [INFO] JOIN room=L2 name=bot4 mark=X transport=tcp peer=127.0.0.1:61288
-2026-04-27 17:33:58.980 [INFO] CONNECT transport=tcp peer=127.0.0.1:61289 pid=a8acf332
-2026-04-27 17:33:58.980 [INFO] CONNECT transport=tcp peer=127.0.0.1:61290 pid=3d4fe904
-2026-04-27 17:33:58.981 [INFO] JOIN room=L1 name=bot3 mark=O transport=tcp peer=127.0.0.1:61290
-2026-04-27 17:33:58.981 [INFO] ROUND 1 STARTED room=L1
-2026-04-27 17:33:58.981 [INFO] JOIN room=L0 name=bot1 mark=O transport=tcp peer=127.0.0.1:61289
-2026-04-27 17:33:58.981 [INFO] ROUND 1 STARTED room=L0
-2026-04-27 17:33:58.981 [INFO] SYNC room=L1 round=1 turn=X move=- recipients=2 fanout_ms=0.07
-2026-04-27 17:33:58.981 [INFO] SYNC room=L0 round=1 turn=X move=- recipients=2 fanout_ms=0.07
-2026-04-27 17:33:59.026 [INFO] SYNC room=L1 round=1 turn=O move=(1,0) recipients=2 fanout_ms=0.19
-2026-04-27 17:33:59.026 [INFO] MOVE room=L1 round=1 by=X cell=(1,0) move_to_broadcast_ms=0.28
-2026-04-27 17:33:59.026 [INFO] SYNC room=L0 round=1 turn=O move=(0,0) recipients=2 fanout_ms=0.09
-2026-04-27 17:33:59.026 [INFO] MOVE room=L0 round=1 by=X cell=(0,0) move_to_broadcast_ms=0.15
-2026-04-27 17:33:59.072 [INFO] SYNC room=L0 round=1 turn=X move=(2,1) recipients=2 fanout_ms=0.26
-2026-04-27 17:33:59.072 [INFO] MOVE room=L0 round=1 by=O cell=(2,1) move_to_broadcast_ms=0.43
-2026-04-27 17:33:59.073 [INFO] SYNC room=L1 round=1 turn=X move=(0,0) recipients=2 fanout_ms=0.20
-2026-04-27 17:33:59.073 [INFO] MOVE room=L1 round=1 by=O cell=(0,0) move_to_broadcast_ms=0.32
-2026-04-27 17:33:59.103 [INFO] SYNC room=L1 round=1 turn=O move=(2,1) recipients=2 fanout_ms=0.24
-2026-04-27 17:33:59.104 [INFO] MOVE room=L1 round=1 by=X cell=(2,1) move_to_broadcast_ms=0.40
-2026-04-27 17:33:59.119 [INFO] SYNC room=L0 round=1 turn=O move=(1,0) recipients=2 fanout_ms=0.27
-2026-04-27 17:33:59.119 [INFO] MOVE room=L0 round=1 by=X cell=(1,0) move_to_broadcast_ms=0.52
-2026-04-27 17:33:59.150 [INFO] SYNC room=L0 round=1 turn=X move=(1,1) recipients=2 fanout_ms=0.19
-2026-04-27 17:33:59.150 [INFO] MOVE room=L0 round=1 by=O cell=(1,1) move_to_broadcast_ms=0.32
-2026-04-27 17:33:59.150 [INFO] SYNC room=L1 round=1 turn=X move=(1,1) recipients=2 fanout_ms=0.08
-2026-04-27 17:33:59.150 [INFO] MOVE room=L1 round=1 by=O cell=(1,1) move_to_broadcast_ms=0.12
-2026-04-27 17:33:59.181 [INFO] SYNC room=L1 round=1 turn=O move=(0,2) recipients=2 fanout_ms=0.18
-2026-04-27 17:33:59.181 [INFO] MOVE room=L1 round=1 by=X cell=(0,2) move_to_broadcast_ms=0.30
-2026-04-27 17:33:59.212 [INFO] SYNC room=L0 round=1 turn=O move=(0,1) recipients=2 fanout_ms=0.09
-2026-04-27 17:33:59.213 [INFO] MOVE room=L0 round=1 by=X cell=(0,1) move_to_broadcast_ms=0.17
-2026-04-27 17:33:59.244 [INFO] SYNC room=L1 round=1 turn=X move=(0,1) recipients=2 fanout_ms=0.34
-2026-04-27 17:33:59.244 [INFO] MOVE room=L1 round=1 by=O cell=(0,1) move_to_broadcast_ms=0.55
-2026-04-27 17:33:59.260 [INFO] SYNC room=L0 round=1 turn=X move=(1,2) recipients=2 fanout_ms=0.20
-2026-04-27 17:33:59.260 [INFO] MOVE room=L0 round=1 by=O cell=(1,2) move_to_broadcast_ms=0.33
-2026-04-27 17:33:59.290 [INFO] SYNC room=L1 round=1 turn=O move=(1,2) recipients=2 fanout_ms=0.33
-2026-04-27 17:33:59.290 [INFO] MOVE room=L1 round=1 by=X cell=(1,2) move_to_broadcast_ms=0.42
-2026-04-27 17:33:59.320 [INFO] ROUND 1 FINISHED room=L0 winner=X line=[[0, 0], [0, 1], [0, 2]]
-2026-04-27 17:33:59.321 [INFO] SYNC room=L0 round=1 turn=X move=(0,2) recipients=2 fanout_ms=0.14
-2026-04-27 17:33:59.321 [INFO] MOVE room=L0 round=1 by=X cell=(0,2) move_to_broadcast_ms=0.34
-2026-04-27 17:33:59.321 [INFO] ROUND 2 STARTED room=L0
-2026-04-27 17:33:59.321 [INFO] SYNC room=L0 round=2 turn=X move=- recipients=2 fanout_ms=0.09
-2026-04-27 17:33:59.337 [INFO] SYNC room=L1 round=1 turn=X move=(2,0) recipients=2 fanout_ms=0.14
-2026-04-27 17:33:59.337 [INFO] MOVE room=L1 round=1 by=O cell=(2,0) move_to_broadcast_ms=0.23
-2026-04-27 17:33:59.352 [INFO] SYNC room=L0 round=2 turn=O move=(2,2) recipients=2 fanout_ms=0.26
-2026-04-27 17:33:59.352 [INFO] MOVE room=L0 round=2 by=X cell=(2,2) move_to_broadcast_ms=0.47
-2026-04-27 17:33:59.383 [INFO] ROUND 1 FINISHED room=L1 winner=X line=[[0, 2], [1, 2], [2, 2]]
-2026-04-27 17:33:59.383 [INFO] SYNC room=L1 round=1 turn=X move=(2,2) recipients=2 fanout_ms=0.15
-2026-04-27 17:33:59.383 [INFO] MOVE room=L1 round=1 by=X cell=(2,2) move_to_broadcast_ms=0.32
-2026-04-27 17:33:59.383 [INFO] ROUND 2 STARTED room=L1
-2026-04-27 17:33:59.384 [INFO] SYNC room=L1 round=2 turn=X move=- recipients=2 fanout_ms=0.09
-2026-04-27 17:33:59.384 [INFO] SYNC room=L0 round=2 turn=X move=(0,2) recipients=2 fanout_ms=0.08
-2026-04-27 17:33:59.384 [INFO] MOVE room=L0 round=2 by=O cell=(0,2) move_to_broadcast_ms=0.13
-2026-04-27 17:33:59.445 [INFO] SYNC room=L0 round=2 turn=O move=(2,1) recipients=2 fanout_ms=0.28
-2026-04-27 17:33:59.446 [INFO] MOVE room=L0 round=2 by=X cell=(2,1) move_to_broadcast_ms=0.49
-2026-04-27 17:33:59.446 [INFO] SYNC room=L1 round=2 turn=O move=(0,0) recipients=2 fanout_ms=0.12
-2026-04-27 17:33:59.446 [INFO] MOVE room=L1 round=2 by=X cell=(0,0) move_to_broadcast_ms=0.18
-2026-04-27 17:33:59.476 [INFO] SYNC room=L1 round=2 turn=X move=(2,1) recipients=2 fanout_ms=0.16
-2026-04-27 17:33:59.476 [INFO] MOVE room=L1 round=2 by=O cell=(2,1) move_to_broadcast_ms=0.35
-2026-04-27 17:33:59.492 [INFO] SYNC room=L0 round=2 turn=X move=(1,2) recipients=2 fanout_ms=0.19
-2026-04-27 17:33:59.492 [INFO] MOVE room=L0 round=2 by=O cell=(1,2) move_to_broadcast_ms=0.33
-2026-04-27 17:33:59.523 [INFO] SYNC room=L1 round=2 turn=O move=(1,1) recipients=2 fanout_ms=0.26
-2026-04-27 17:33:59.523 [INFO] MOVE room=L1 round=2 by=X cell=(1,1) move_to_broadcast_ms=0.43
-2026-04-27 17:33:59.553 [INFO] SYNC room=L0 round=2 turn=O move=(0,1) recipients=2 fanout_ms=0.25
-2026-04-27 17:33:59.554 [INFO] MOVE room=L0 round=2 by=X cell=(0,1) move_to_broadcast_ms=0.40
-2026-04-27 17:33:59.569 [INFO] SYNC room=L1 round=2 turn=X move=(1,0) recipients=2 fanout_ms=0.48
-2026-04-27 17:33:59.569 [INFO] MOVE room=L1 round=2 by=O cell=(1,0) move_to_broadcast_ms=0.64
-2026-04-27 17:33:59.600 [INFO] SYNC room=L0 round=2 turn=X move=(0,0) recipients=2 fanout_ms=0.13
-2026-04-27 17:33:59.601 [INFO] MOVE room=L0 round=2 by=O cell=(0,0) move_to_broadcast_ms=0.20
-2026-04-27 17:33:59.616 [INFO] SYNC room=L1 round=2 turn=O move=(0,2) recipients=2 fanout_ms=0.26
-2026-04-27 17:33:59.616 [INFO] MOVE room=L1 round=2 by=X cell=(0,2) move_to_broadcast_ms=0.40
-2026-04-27 17:33:59.647 [INFO] ROUND 2 FINISHED room=L0 winner=X line=[[2, 0], [2, 1], [2, 2]]
-2026-04-27 17:33:59.647 [INFO] SYNC room=L0 round=2 turn=X move=(2,0) recipients=2 fanout_ms=0.25
-2026-04-27 17:33:59.647 [INFO] MOVE room=L0 round=2 by=X cell=(2,0) move_to_broadcast_ms=0.47
-2026-04-27 17:33:59.647 [INFO] ROUND 3 STARTED room=L0
-2026-04-27 17:33:59.648 [INFO] SYNC room=L0 round=3 turn=X move=- recipients=2 fanout_ms=0.07
-2026-04-27 17:33:59.678 [INFO] SYNC room=L1 round=2 turn=X move=(0,1) recipients=2 fanout_ms=0.24
-2026-04-27 17:33:59.678 [INFO] MOVE room=L1 round=2 by=O cell=(0,1) move_to_broadcast_ms=0.37
-2026-04-27 17:33:59.693 [INFO] SYNC room=L0 round=3 turn=O move=(1,2) recipients=2 fanout_ms=0.16
-2026-04-27 17:33:59.694 [INFO] MOVE room=L0 round=3 by=X cell=(1,2) move_to_broadcast_ms=0.28
-2026-04-27 17:33:59.739 [INFO] ROUND 2 FINISHED room=L1 winner=X line=[[0, 0], [1, 1], [2, 2]]
-2026-04-27 17:33:59.739 [INFO] SYNC room=L1 round=2 turn=X move=(2,2) recipients=2 fanout_ms=0.16
-2026-04-27 17:33:59.740 [INFO] MOVE room=L1 round=2 by=X cell=(2,2) move_to_broadcast_ms=0.35
-2026-04-27 17:33:59.740 [INFO] ROUND 3 STARTED room=L1
-2026-04-27 17:33:59.740 [INFO] SYNC room=L1 round=3 turn=X move=- recipients=2 fanout_ms=0.09
-2026-04-27 17:33:59.755 [INFO] SYNC room=L0 round=3 turn=X move=(0,0) recipients=2 fanout_ms=0.19
-2026-04-27 17:33:59.756 [INFO] MOVE room=L0 round=3 by=O cell=(0,0) move_to_broadcast_ms=0.28
-2026-04-27 17:33:59.801 [INFO] SYNC room=L1 round=3 turn=O move=(0,2) recipients=2 fanout_ms=0.20
-2026-04-27 17:33:59.801 [INFO] MOVE room=L1 round=3 by=X cell=(0,2) move_to_broadcast_ms=0.34
-2026-04-27 17:33:59.816 [INFO] SYNC room=L0 round=3 turn=O move=(2,0) recipients=2 fanout_ms=0.18
-2026-04-27 17:33:59.816 [INFO] MOVE room=L0 round=3 by=X cell=(2,0) move_to_broadcast_ms=0.25
-2026-04-27 17:33:59.848 [INFO] SYNC room=L0 round=3 turn=X move=(1,0) recipients=2 fanout_ms=0.28
-2026-04-27 17:33:59.848 [INFO] MOVE room=L0 round=3 by=O cell=(1,0) move_to_broadcast_ms=0.43
-2026-04-27 17:33:59.848 [INFO] SYNC room=L1 round=3 turn=X move=(0,0) recipients=2 fanout_ms=0.12
-2026-04-27 17:33:59.848 [INFO] MOVE room=L1 round=3 by=O cell=(0,0) move_to_broadcast_ms=0.21
-2026-04-27 17:33:59.894 [INFO] SYNC room=L1 round=3 turn=O move=(0,1) recipients=2 fanout_ms=0.23
-2026-04-27 17:33:59.894 [INFO] MOVE room=L1 round=3 by=X cell=(0,1) move_to_broadcast_ms=0.37
-2026-04-27 17:33:59.909 [INFO] SYNC room=L0 round=3 turn=O move=(0,1) recipients=2 fanout_ms=0.24
-2026-04-27 17:33:59.909 [INFO] MOVE room=L0 round=3 by=X cell=(0,1) move_to_broadcast_ms=0.37
-2026-04-27 17:33:59.925 [INFO] SYNC room=L1 round=3 turn=X move=(1,1) recipients=2 fanout_ms=0.22
-2026-04-27 17:33:59.925 [INFO] MOVE room=L1 round=3 by=O cell=(1,1) move_to_broadcast_ms=0.39
-2026-04-27 17:33:59.972 [INFO] SYNC room=L0 round=3 turn=X move=(0,2) recipients=2 fanout_ms=0.28
-2026-04-27 17:33:59.972 [INFO] MOVE room=L0 round=3 by=O cell=(0,2) move_to_broadcast_ms=0.45
-2026-04-27 17:33:59.987 [INFO] SYNC room=L1 round=3 turn=O move=(2,2) recipients=2 fanout_ms=0.25
-2026-04-27 17:33:59.987 [INFO] MOVE room=L1 round=3 by=X cell=(2,2) move_to_broadcast_ms=0.43
-2026-04-27 17:34:00.033 [INFO] SYNC room=L0 round=3 turn=O move=(1,1) recipients=2 fanout_ms=0.16
-2026-04-27 17:34:00.033 [INFO] MOVE room=L0 round=3 by=X cell=(1,1) move_to_broadcast_ms=0.31
-2026-04-27 17:34:00.049 [INFO] SYNC room=L1 round=3 turn=X move=(1,2) recipients=2 fanout_ms=0.35
-2026-04-27 17:34:00.049 [INFO] MOVE room=L1 round=3 by=O cell=(1,2) move_to_broadcast_ms=0.56
-2026-04-27 17:34:00.094 [INFO] SYNC room=L0 round=3 turn=X move=(2,1) recipients=2 fanout_ms=0.16
-2026-04-27 17:34:00.094 [INFO] MOVE room=L0 round=3 by=O cell=(2,1) move_to_broadcast_ms=0.32
-2026-04-27 17:34:00.110 [INFO] SYNC room=L1 round=3 turn=O move=(2,0) recipients=2 fanout_ms=0.31
-2026-04-27 17:34:00.110 [INFO] MOVE room=L1 round=3 by=X cell=(2,0) move_to_broadcast_ms=0.52
-2026-04-27 17:34:00.125 [INFO] ROUND 3 FINISHED room=L0 result=draw
-2026-04-27 17:34:00.125 [INFO] SYNC room=L0 round=3 turn=X move=(2,2) recipients=2 fanout_ms=0.20
-2026-04-27 17:34:00.125 [INFO] MOVE room=L0 round=3 by=X cell=(2,2) move_to_broadcast_ms=0.44
-2026-04-27 17:34:00.125 [INFO] ROUND 4 STARTED room=L0
-2026-04-27 17:34:00.126 [INFO] SYNC room=L0 round=4 turn=X move=- recipients=2 fanout_ms=0.11
-2026-04-27 17:34:00.156 [INFO] SYNC room=L1 round=3 turn=X move=(2,1) recipients=2 fanout_ms=0.18
-2026-04-27 17:34:00.156 [INFO] MOVE room=L1 round=3 by=O cell=(2,1) move_to_broadcast_ms=0.33
-2026-04-27 17:34:00.188 [INFO] SYNC room=L0 round=4 turn=O move=(0,0) recipients=2 fanout_ms=0.33
-2026-04-27 17:34:00.188 [INFO] MOVE room=L0 round=4 by=X cell=(0,0) move_to_broadcast_ms=0.54
-2026-04-27 17:34:00.204 [INFO] ROUND 3 FINISHED room=L1 result=draw
-2026-04-27 17:34:00.204 [INFO] SYNC room=L1 round=3 turn=X move=(1,0) recipients=2 fanout_ms=0.27
-2026-04-27 17:34:00.204 [INFO] MOVE room=L1 round=3 by=X cell=(1,0) move_to_broadcast_ms=0.62
-2026-04-27 17:34:00.204 [INFO] ROUND 4 STARTED room=L1
-2026-04-27 17:34:00.205 [INFO] SYNC room=L1 round=4 turn=X move=- recipients=2 fanout_ms=0.06
-2026-04-27 17:34:00.251 [INFO] SYNC room=L0 round=4 turn=X move=(2,1) recipients=2 fanout_ms=0.22
-2026-04-27 17:34:00.251 [INFO] MOVE room=L0 round=4 by=O cell=(2,1) move_to_broadcast_ms=0.38
-2026-04-27 17:34:00.267 [INFO] SYNC room=L1 round=4 turn=O move=(2,0) recipients=2 fanout_ms=0.27
-2026-04-27 17:34:00.267 [INFO] MOVE room=L1 round=4 by=X cell=(2,0) move_to_broadcast_ms=0.45
-2026-04-27 17:34:00.298 [INFO] SYNC room=L0 round=4 turn=O move=(1,1) recipients=2 fanout_ms=0.19
-2026-04-27 17:34:00.298 [INFO] MOVE room=L0 round=4 by=X cell=(1,1) move_to_broadcast_ms=0.33
-2026-04-27 17:34:00.313 [INFO] SYNC room=L1 round=4 turn=X move=(0,2) recipients=2 fanout_ms=0.20
-2026-04-27 17:34:00.313 [INFO] MOVE room=L1 round=4 by=O cell=(0,2) move_to_broadcast_ms=0.38
-2026-04-27 17:34:00.359 [INFO] SYNC room=L0 round=4 turn=X move=(0,1) recipients=2 fanout_ms=0.21
-2026-04-27 17:34:00.359 [INFO] MOVE room=L0 round=4 by=O cell=(0,1) move_to_broadcast_ms=0.36
-2026-04-27 17:34:00.375 [INFO] SYNC room=L1 round=4 turn=O move=(2,1) recipients=2 fanout_ms=0.20
-2026-04-27 17:34:00.375 [INFO] MOVE room=L1 round=4 by=X cell=(2,1) move_to_broadcast_ms=0.35
-2026-04-27 17:34:00.405 [INFO] SYNC room=L0 round=4 turn=O move=(0,2) recipients=2 fanout_ms=0.25
-2026-04-27 17:34:00.406 [INFO] MOVE room=L0 round=4 by=X cell=(0,2) move_to_broadcast_ms=0.39
-2026-04-27 17:34:00.406 [INFO] SYNC room=L1 round=4 turn=X move=(0,0) recipients=2 fanout_ms=0.10
-2026-04-27 17:34:00.406 [INFO] MOVE room=L1 round=4 by=O cell=(0,0) move_to_broadcast_ms=0.17
-2026-04-27 17:34:00.452 [INFO] SYNC room=L1 round=4 turn=O move=(1,1) recipients=2 fanout_ms=0.30
-2026-04-27 17:34:00.452 [INFO] MOVE room=L1 round=4 by=X cell=(1,1) move_to_broadcast_ms=0.45
-2026-04-27 17:34:00.467 [INFO] SYNC room=L0 round=4 turn=X move=(1,2) recipients=2 fanout_ms=0.31
-2026-04-27 17:34:00.467 [INFO] MOVE room=L0 round=4 by=O cell=(1,2) move_to_broadcast_ms=0.48
-2026-04-27 17:34:00.513 [INFO] SYNC room=L1 round=4 turn=X move=(2,2) recipients=2 fanout_ms=0.21
-2026-04-27 17:34:00.513 [INFO] MOVE room=L1 round=4 by=O cell=(2,2) move_to_broadcast_ms=0.40
-2026-04-27 17:34:00.528 [INFO] SYNC room=L0 round=4 turn=O move=(1,0) recipients=2 fanout_ms=0.28
-2026-04-27 17:34:00.529 [INFO] MOVE room=L0 round=4 by=X cell=(1,0) move_to_broadcast_ms=0.53
-2026-04-27 17:34:00.559 [INFO] SYNC room=L1 round=4 turn=O move=(1,2) recipients=2 fanout_ms=0.28
-2026-04-27 17:34:00.559 [INFO] MOVE room=L1 round=4 by=X cell=(1,2) move_to_broadcast_ms=0.44
-2026-04-27 17:34:00.590 [INFO] SYNC room=L0 round=4 turn=X move=(2,2) recipients=2 fanout_ms=0.18
-2026-04-27 17:34:00.590 [INFO] MOVE room=L0 round=4 by=O cell=(2,2) move_to_broadcast_ms=0.30
-2026-04-27 17:34:00.590 [INFO] ROUND 4 FINISHED room=L1 winner=O line=[[0, 0], [0, 1], [0, 2]]
-2026-04-27 17:34:00.590 [INFO] SYNC room=L1 round=4 turn=O move=(0,1) recipients=2 fanout_ms=0.10
-2026-04-27 17:34:00.590 [INFO] MOVE room=L1 round=4 by=O cell=(0,1) move_to_broadcast_ms=0.18
-2026-04-27 17:34:00.590 [INFO] ROUND 5 STARTED room=L1
-2026-04-27 17:34:00.591 [INFO] SYNC room=L1 round=5 turn=X move=- recipients=2 fanout_ms=0.07
-2026-04-27 17:34:00.637 [INFO] ROUND 4 FINISHED room=L0 winner=X line=[[0, 0], [1, 0], [2, 0]]
-2026-04-27 17:34:00.637 [INFO] SYNC room=L0 round=4 turn=X move=(2,0) recipients=2 fanout_ms=0.25
-2026-04-27 17:34:00.637 [INFO] MOVE room=L0 round=4 by=X cell=(2,0) move_to_broadcast_ms=0.48
-2026-04-27 17:34:00.637 [INFO] ROUND 5 STARTED room=L0
-2026-04-27 17:34:00.638 [INFO] SYNC room=L0 round=5 turn=X move=- recipients=2 fanout_ms=0.08
-2026-04-27 17:34:00.653 [INFO] SYNC room=L1 round=5 turn=O move=(2,1) recipients=2 fanout_ms=0.27
-2026-04-27 17:34:00.653 [INFO] MOVE room=L1 round=5 by=X cell=(2,1) move_to_broadcast_ms=0.42
-2026-04-27 17:34:00.683 [INFO] SYNC room=L0 round=5 turn=O move=(1,2) recipients=2 fanout_ms=0.23
-2026-04-27 17:34:00.684 [INFO] MOVE room=L0 round=5 by=X cell=(1,2) move_to_broadcast_ms=0.38
-2026-04-27 17:34:00.715 [INFO] SYNC room=L1 round=5 turn=X move=(1,0) recipients=2 fanout_ms=0.19
-2026-04-27 17:34:00.715 [INFO] MOVE room=L1 round=5 by=O cell=(1,0) move_to_broadcast_ms=0.37
-2026-04-27 17:34:00.715 [INFO] SYNC room=L0 round=5 turn=X move=(1,1) recipients=2 fanout_ms=0.09
-2026-04-27 17:34:00.715 [INFO] MOVE room=L0 round=5 by=O cell=(1,1) move_to_broadcast_ms=0.14
-2026-04-27 17:34:00.761 [INFO] SYNC room=L1 round=5 turn=O move=(1,1) recipients=2 fanout_ms=0.24
-2026-04-27 17:34:00.761 [INFO] MOVE room=L1 round=5 by=X cell=(1,1) move_to_broadcast_ms=0.37
-2026-04-27 17:34:00.776 [INFO] SYNC room=L0 round=5 turn=O move=(1,0) recipients=2 fanout_ms=0.22
-2026-04-27 17:34:00.776 [INFO] MOVE room=L0 round=5 by=X cell=(1,0) move_to_broadcast_ms=0.35
-2026-04-27 17:34:00.822 [INFO] SYNC room=L1 round=5 turn=X move=(2,2) recipients=2 fanout_ms=0.14
-2026-04-27 17:34:00.822 [INFO] MOVE room=L1 round=5 by=O cell=(2,2) move_to_broadcast_ms=0.21
-2026-04-27 17:34:00.823 [INFO] SYNC room=L0 round=5 turn=X move=(0,1) recipients=2 fanout_ms=0.07
-2026-04-27 17:34:00.823 [INFO] MOVE room=L0 round=5 by=O cell=(0,1) move_to_broadcast_ms=0.12
-2026-04-27 17:34:00.854 [INFO] SYNC room=L1 round=5 turn=O move=(0,2) recipients=2 fanout_ms=0.25
-2026-04-27 17:34:00.854 [INFO] MOVE room=L1 round=5 by=X cell=(0,2) move_to_broadcast_ms=0.44
-2026-04-27 17:34:00.855 [INFO] SYNC room=L0 round=5 turn=O move=(0,2) recipients=2 fanout_ms=0.10
-2026-04-27 17:34:00.855 [INFO] MOVE room=L0 round=5 by=X cell=(0,2) move_to_broadcast_ms=0.14
-2026-04-27 17:34:00.900 [INFO] SYNC room=L0 round=5 turn=X move=(2,0) recipients=2 fanout_ms=0.22
-2026-04-27 17:34:00.901 [INFO] MOVE room=L0 round=5 by=O cell=(2,0) move_to_broadcast_ms=0.34
-2026-04-27 17:34:00.916 [INFO] SYNC room=L1 round=5 turn=X move=(2,0) recipients=2 fanout_ms=0.15
-2026-04-27 17:34:00.916 [INFO] MOVE room=L1 round=5 by=O cell=(2,0) move_to_broadcast_ms=0.27
-2026-04-27 17:34:00.963 [INFO] ROUND 5 FINISHED room=L0 winner=X line=[[0, 2], [1, 2], [2, 2]]
-2026-04-27 17:34:00.963 [INFO] SYNC room=L0 round=5 turn=X move=(2,2) recipients=2 fanout_ms=0.15
-2026-04-27 17:34:00.963 [INFO] MOVE room=L0 round=5 by=X cell=(2,2) move_to_broadcast_ms=0.35
-2026-04-27 17:34:00.963 [INFO] LEAVE name=bot0 room=L0 mark=X
-2026-04-27 17:34:00.963 [INFO] ROOM RESET room=L0 reason=opponent_left survivor=bot1
-2026-04-27 17:34:00.963 [INFO] LEAVE name=bot1 room=L0 mark=O
-2026-04-27 17:34:00.963 [INFO] ROOM CLOSED room=L0 reason=empty
-2026-04-27 17:34:00.964 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:34:00.964 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:34:00.964 [ERROR] Unhandled exception in client_connected_cb
-transport: <_ProactorSocketTransport closed>
-Traceback (most recent call last):
-  File "C:\Users\User\Desktop\Inno\dnp\project\server.py", line 598, in handle_tcp
-    await writer.wait_closed()
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\streams.py", line 358, in wait_closed
-    await self._protocol._get_close_waiter(self)
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
-    self._write_fut = self._loop._proactor.send(self._sock, data)
-                      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 543, in send
-    ov.WSASend(conn.fileno(), buf, flags)
-    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
-2026-04-27 17:34:00.992 [ERROR] Unhandled exception in client_connected_cb
-transport: <_ProactorSocketTransport closed>
-Traceback (most recent call last):
-  File "C:\Users\User\Desktop\Inno\dnp\project\server.py", line 598, in handle_tcp
-    await writer.wait_closed()
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\streams.py", line 358, in wait_closed
-    await self._protocol._get_close_waiter(self)
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
-    self._write_fut = self._loop._proactor.send(self._sock, data)
-                      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 543, in send
-    ov.WSASend(conn.fileno(), buf, flags)
-    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
-2026-04-27 17:34:00.993 [INFO] ROUND 5 FINISHED room=L1 winner=X line=[[0, 1], [1, 1], [2, 1]]
-2026-04-27 17:34:00.993 [INFO] SYNC room=L1 round=5 turn=X move=(0,1) recipients=2 fanout_ms=0.12
-2026-04-27 17:34:00.993 [INFO] MOVE room=L1 round=5 by=X cell=(0,1) move_to_broadcast_ms=0.22
-2026-04-27 17:34:00.993 [INFO] LEAVE name=bot2 room=L1 mark=X
-2026-04-27 17:34:00.993 [INFO] ROOM RESET room=L1 reason=opponent_left survivor=bot3
-2026-04-27 17:34:00.994 [INFO] LEAVE name=bot3 room=L1 mark=O
-2026-04-27 17:34:00.994 [INFO] ROOM CLOSED room=L1 reason=empty
-2026-04-27 17:34:00.994 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:34:00.994 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:34:00.994 [ERROR] Unhandled exception in client_connected_cb
-transport: <_ProactorSocketTransport closed>
-Traceback (most recent call last):
-  File "C:\Users\User\Desktop\Inno\dnp\project\server.py", line 598, in handle_tcp
-    await writer.wait_closed()
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\streams.py", line 358, in wait_closed
-    await self._protocol._get_close_waiter(self)
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
-    self._write_fut = self._loop._proactor.send(self._sock, data)
-                      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 543, in send
-    ov.WSASend(conn.fileno(), buf, flags)
-    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
-2026-04-27 17:34:00.994 [ERROR] Unhandled exception in client_connected_cb
-transport: <_ProactorSocketTransport closed>
-Traceback (most recent call last):
-  File "C:\Users\User\Desktop\Inno\dnp\project\server.py", line 598, in handle_tcp
-    await writer.wait_closed()
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\streams.py", line 358, in wait_closed
-    await self._protocol._get_close_waiter(self)
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 306, in _loop_reading
-    self._read_fut = self._loop._proactor.recv_into(self._sock, self._data)
-                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 501, in recv_into
-    ov.WSARecvInto(conn.fileno(), buf, flags)
-    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
-2026-04-27 17:34:06.931 [INFO] LEAVE name=bot4 room=L2 mark=X
-2026-04-27 17:34:06.931 [INFO] ROOM CLOSED room=L2 reason=empty
-2026-04-27 17:34:06.931 [INFO] DISCONNECT name= room=- mark=None
-2026-04-27 17:34:06.931 [ERROR] Unhandled exception in client_connected_cb
-transport: <_ProactorSocketTransport closed>
-Traceback (most recent call last):
-  File "C:\Users\User\Desktop\Inno\dnp\project\server.py", line 598, in handle_tcp
-    await writer.wait_closed()
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\streams.py", line 358, in wait_closed
-    await self._protocol._get_close_waiter(self)
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\proactor_events.py", line 402, in _loop_writing
-    self._write_fut = self._loop._proactor.send(self._sock, data)
-                      ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\asyncio\windows_events.py", line 543, in send
-    ov.WSASend(conn.fileno(), buf, flags)
-    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ConnectionAbortedError: [WinError 10053] Программа на вашем хост-компьютере разорвала установленное подключение
-2026-04-27 18:44:44.125 [INFO] TCP listening on 0.0.0.0:5555
-2026-04-27 18:44:44.139 [INFO] server listening on 0.0.0.0:8765
-2026-04-27 18:44:44.140 [INFO] WS  listening on 0.0.0.0:8765
-2026-04-27 18:44:58.379 [INFO] connection open
-2026-04-27 18:44:58.379 [INFO] CONNECT transport=ws peer=127.0.0.1:61454 pid=d17fb3f1
-2026-04-27 18:45:11.006 [INFO] ROOM CREATED room=ASD password=yes
-2026-04-27 18:45:11.006 [INFO] JOIN room=ASD name=xz mark=X transport=ws peer=127.0.0.1:61454
-2026-04-27 18:45:17.016 [INFO] connection open
-2026-04-27 18:45:17.016 [INFO] CONNECT transport=ws peer=127.0.0.1:55569 pid=197cb0c9
-2026-04-27 18:45:25.585 [INFO] JOIN room=ASD name=xui mark=O transport=ws peer=127.0.0.1:55569
-2026-04-27 18:45:25.585 [INFO] ROUND 1 STARTED room=ASD
-2026-04-27 18:45:25.586 [INFO] SYNC room=ASD round=1 turn=X move=- recipients=2 fanout_ms=0.13
-2026-04-27 18:45:29.898 [INFO] CHAT room=ASD nickname=xui text=xz
-2026-04-27 18:45:33.362 [INFO] CHAT room=ASD nickname=xz text=zx
-2026-04-27 18:45:35.445 [INFO] SYNC room=ASD round=1 turn=O move=(0,2) recipients=2 fanout_ms=0.21
-2026-04-27 18:45:35.445 [INFO] MOVE room=ASD round=1 by=X cell=(0,2) move_to_broadcast_ms=0.46
-2026-04-27 18:45:36.735 [INFO] SYNC room=ASD round=1 turn=X move=(1,2) recipients=2 fanout_ms=0.26
-2026-04-27 18:45:36.735 [INFO] MOVE room=ASD round=1 by=O cell=(1,2) move_to_broadcast_ms=0.51
-2026-04-27 18:45:37.822 [INFO] SYNC room=ASD round=1 turn=O move=(1,1) recipients=2 fanout_ms=0.25
-2026-04-27 18:45:37.822 [INFO] MOVE room=ASD round=1 by=X cell=(1,1) move_to_broadcast_ms=0.53
-2026-04-27 18:45:39.427 [INFO] SYNC room=ASD round=1 turn=X move=(2,1) recipients=2 fanout_ms=0.34
-2026-04-27 18:45:39.427 [INFO] MOVE room=ASD round=1 by=O cell=(2,1) move_to_broadcast_ms=0.54
-2026-04-27 18:45:40.544 [INFO] ROUND 1 FINISHED room=ASD winner=X line=[[0, 2], [1, 1], [2, 0]]
-2026-04-27 18:45:40.545 [INFO] SYNC room=ASD round=1 turn=X move=(2,0) recipients=2 fanout_ms=0.30
-2026-04-27 18:45:40.545 [INFO] MOVE room=ASD round=1 by=X cell=(2,0) move_to_broadcast_ms=0.76
-2026-04-27 18:45:43.929 [INFO] DISCONNECT name=xz room=ASD mark=X
-2026-04-27 18:45:44.385 [INFO] DISCONNECT name=xui room=ASD mark=O
-2026-04-27 18:45:44.386 [INFO] ROOM CLOSED room=ASD reason=empty
-2026-04-27 18:46:02.944 [INFO] server closing
-2026-04-27 18:46:02.944 [INFO] server closed
-2026-04-27 18:46:02.944 [INFO] shutting down
+2026-04-28 01:59:17.331 [INFO] TCP listening on 0.0.0.0:5555
+2026-04-28 01:59:17.342 [INFO] server listening on 0.0.0.0:8765
+2026-04-28 01:59:17.342 [INFO] WS  listening on 0.0.0.0:8765
+2026-04-28 01:59:19.193 [INFO] connection open
+2026-04-28 01:59:19.193 [INFO] CONNECT transport=ws peer=127.0.0.1:50750 pid=e90a1990
+2026-04-28 01:59:19.208 [INFO] connection open
+2026-04-28 01:59:19.208 [INFO] CONNECT transport=ws peer=127.0.0.1:60814 pid=e4cd7dda
+2026-04-28 01:59:43.863 [INFO] connection open
+2026-04-28 01:59:43.863 [INFO] CONNECT transport=ws peer=127.0.0.1:64741 pid=44dedd6c
+2026-04-28 01:59:45.914 [INFO] connection open
+2026-04-28 01:59:45.914 [INFO] CONNECT transport=ws peer=127.0.0.1:64743 pid=a9e69fcc
+2026-04-28 01:59:46.718 [INFO] ROOM CREATED room=TEST password=no
+2026-04-28 01:59:46.718 [INFO] JOIN room=TEST name=Alice mark=X transport=ws peer=127.0.0.1:64741
+2026-04-28 01:59:47.119 [INFO] JOIN room=TEST name=Bob mark=O transport=ws peer=127.0.0.1:64743
+2026-04-28 01:59:47.120 [INFO] ROUND 1 STARTED room=TEST rejoin_code=2015
+2026-04-28 01:59:47.120 [INFO] SYNC room=TEST round=1 turn=X move=- recipients=2 fanout_ms=0.17
+2026-04-28 01:59:47.924 [INFO] DISCONNECT name=Alice room=TEST mark=X
+2026-04-28 01:59:50.978 [INFO] connection open
+2026-04-28 01:59:50.979 [INFO] CONNECT transport=ws peer=127.0.0.1:60732 pid=efdb73ed
+2026-04-28 01:59:54.237 [INFO] connection open
+2026-04-28 01:59:54.238 [INFO] CONNECT transport=ws peer=127.0.0.1:60735 pid=370c0d34
+2026-04-28 01:59:54.638 [INFO] RECONNECT room=TEST name=Alice mark=X
+2026-04-28 01:59:54.639 [INFO] SYNC room=TEST round=1 turn=X move=- recipients=2 fanout_ms=0.07
+2026-04-28 01:59:55.041 [INFO] DISCONNECT name=Bob room=TEST mark=O
+2026-04-28 01:59:55.042 [INFO] DISCONNECT name=Eve room=- mark=None
+2026-04-28 01:59:55.043 [INFO] DISCONNECT name=Alice room=TEST mark=X
+2026-04-28 01:59:55.043 [INFO] ROOM CLOSED room=TEST reason=empty
+2026-04-28 02:16:11.431 [INFO] TCP listening on 0.0.0.0:5555
+2026-04-28 02:16:11.440 [INFO] server listening on 0.0.0.0:8765
+2026-04-28 02:16:11.440 [INFO] WS  listening on 0.0.0.0:8765
+2026-04-28 02:16:14.146 [INFO] connection open
+2026-04-28 02:16:14.147 [INFO] CONNECT transport=ws peer=127.0.0.1:61419 pid=b03181ad
+2026-04-28 02:16:15.212 [INFO] DISCONNECT name= room=- mark=None
+2026-04-28 02:16:15.213 [INFO] connection open
+2026-04-28 02:16:15.213 [INFO] CONNECT transport=ws peer=127.0.0.1:55051 pid=8297682e
+2026-04-28 02:16:15.675 [INFO] connection open
+2026-04-28 02:16:15.675 [INFO] CONNECT transport=ws peer=127.0.0.1:60156 pid=dfb9c48f
+2026-04-28 02:17:01.120 [INFO] DISCONNECT name= room=- mark=None
+2026-04-28 02:17:01.468 [INFO] connection open
+2026-04-28 02:17:01.468 [INFO] CONNECT transport=ws peer=127.0.0.1:56041 pid=934e2d0b
+2026-04-28 02:17:11.604 [INFO] ROOM CREATED room=ABC password=yes
+2026-04-28 02:17:11.604 [INFO] JOIN room=ABC name=xui mark=X transport=ws peer=127.0.0.1:56041
+2026-04-28 02:17:14.957 [INFO] DISCONNECT name= room=- mark=None
+2026-04-28 02:17:15.582 [INFO] connection open
+2026-04-28 02:17:15.583 [INFO] CONNECT transport=ws peer=127.0.0.1:57216 pid=d6353f61
+2026-04-28 02:17:25.998 [INFO] JOIN room=ABC name=xui mark=O transport=ws peer=127.0.0.1:57216
+2026-04-28 02:17:25.998 [INFO] ROUND 1 STARTED room=ABC rejoin_code=5560
+2026-04-28 02:17:25.999 [INFO] SYNC room=ABC round=1 turn=X move=- recipients=2 fanout_ms=0.14
+2026-04-28 02:17:41.711 [INFO] connection open
+2026-04-28 02:17:41.712 [INFO] CONNECT transport=ws peer=127.0.0.1:51666 pid=38792173
+2026-04-28 02:17:46.164 [INFO] DISCONNECT name=xui room=ABC mark=O
+2026-04-28 02:17:57.491 [INFO] RECONNECT room=ABC name=xui mark=O
+2026-04-28 02:17:57.492 [INFO] SYNC room=ABC round=1 turn=X move=- recipients=2 fanout_ms=0.12
+2026-04-28 02:21:43.429 [INFO] DISCONNECT name=xui room=ABC mark=O
+2026-04-28 02:21:46.130 [INFO] server closing
+2026-04-28 02:21:46.130 [INFO] DISCONNECT name=xui room=ABC mark=X
+2026-04-28 02:21:46.130 [INFO] ROOM CLOSED room=ABC reason=empty
+2026-04-28 02:21:46.131 [INFO] server closed
+2026-04-28 02:21:46.138 [INFO] shutting down

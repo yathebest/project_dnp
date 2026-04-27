@@ -122,6 +122,7 @@
           </div>
           <div class="info">
             <div class="round">Round <span id="roundNo">1</span> · Room <span id="roomLabel" class="kbd-mini"></span></div>
+            <div class="rejoin-code hidden" id="rejoinCodeLine" title="Use this code to rejoin if you disconnect">rejoin code: <span id="rejoinCodeVal" class="kbd-code">—</span></div>
             <div class="turn" id="turnLine">Your turn</div>
           </div>
         </header>
@@ -173,6 +174,10 @@
         <label>
           <span>Your name</span>
           <input id="joinModalName" maxlength="32" required placeholder="Alice" autocomplete="off" />
+        </label>
+        <label id="joinModalCodeLabel" class="hidden">
+          <span>Rejoin code <em class="hint">(4 digits, shown in the room)</em></span>
+          <input id="joinModalCodeInput" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="1234" autocomplete="off" />
         </label>
         <label id="joinModalPwLabel" class="hidden">
           <span>Password</span>

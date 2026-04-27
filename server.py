@@ -110,6 +110,7 @@ class Room:
     win_line: Optional[list] = None
     grace_task: Optional[asyncio.Task] = None
     pending_name: Optional[str] = None
+    rejoin_code: Optional[str] = None
     chat: list = field(default_factory=list)
 
 
@@ -122,16 +123,22 @@ def rooms_snapshot():
     out = []
     for r in rooms.values():
         played = any(c is not None for row in r.board for c in row)
+        in_grace = r.grace_task is not None
         out.append({
             "code": r.code,
             "players": len(r.players),
             "max": MAX_PLAYERS,
             "has_password": r.password is not None,
             "in_progress": r.round_no > 1 or played,
-            "joinable": len(r.players) < MAX_PLAYERS and r.grace_task is None,
+            "joinable": len(r.players) < MAX_PLAYERS and not in_grace,
+            "in_grace": in_grace,
         })
-    out.sort(key=lambda d: (not d["joinable"], d["code"]))
+    out.sort(key=lambda d: (not (d["joinable"] or d["in_grace"]), d["code"]))
     return out
+
+
+def gen_rejoin_code():
+    return "%04d" % random.randint(0, 9999)
 
 
 def opponent_of(room, player):
@@ -149,6 +156,7 @@ def reset_room(room):
     room.winner = None
     room.win_line = None
     room.chat = []
+    room.rejoin_code = None
     for p in room.players:
         p.wants_new_round = False
 
@@ -161,8 +169,10 @@ async def broadcast_rooms():
     if not observers:
         return
     msg = {"type": "rooms", "rooms": rooms_snapshot()}
-    await asyncio.gather(*(p.send(msg) for p in list(observers)),
-                         return_exceptions=True)
+    await asyncio.gather(
+        *(p.send(msg) for p in list(observers)),
+        return_exceptions=True,
+    )
 
 
 async def broadcast_to_room(room, msg):
@@ -192,6 +202,7 @@ async def broadcast_state(room, last_move=None):
             "scores": room.scores,
             "winner": room.winner,
             "line": room.win_line,
+            "rejoin_code": room.rejoin_code,
             "server_ts": now_ms(),
         })
     fanout_ms = (time.perf_counter() - t0) * 1000.0
@@ -217,7 +228,7 @@ def create_room(code, password):
     return r, None
 
 
-def find_room(code, password, name):
+def find_room(code, password, name, rejoin_code):
     code = normalize_code(code)
     if code is None:
         return None, "bad_room_code"
@@ -225,10 +236,14 @@ def find_room(code, password, name):
     if r is None:
         return None, "room_not_found"
     in_grace = r.grace_task is not None
-    rejoin = in_grace and name and r.pending_name == name
-    if not rejoin and len(r.players) >= MAX_PLAYERS:
+    rejoin = False
+    if in_grace and rejoin_code and r.rejoin_code and rejoin_code == r.rejoin_code:
+        rejoin = True
+    elif in_grace and name and r.pending_name == name and not r.rejoin_code:
+        rejoin = True
+    if not rejoin and (in_grace or len(r.players) >= MAX_PLAYERS):
         return None, "room_full"
-    if r.password is not None and (password or "") != r.password:
+    if not rejoin and r.password is not None and (password or "") != r.password:
         return None, "wrong_password"
     return r, None
 
@@ -266,7 +281,10 @@ async def seat_player(room, p):
     if room.chat:
         await p.send({"type": "chat_history", "messages": list(room.chat)})
     if len(room.players) == MAX_PLAYERS:
-        log.info("ROUND %d STARTED room=%s", room.round_no, room.code)
+        if room.rejoin_code is None:
+            room.rejoin_code = gen_rejoin_code()
+        log.info("ROUND %d STARTED room=%s rejoin_code=%s",
+                 room.round_no, room.code, room.rejoin_code)
         await broadcast_to_room(room, {
             "type": "log", "level": "info",
             "message": "Round %d started - %s (X) vs %s (O)" % (
@@ -316,13 +334,19 @@ async def cmd_create(p, name, code, password):
     await seat_player(r, p)
 
 
-async def cmd_join(p, name, code, password):
+async def cmd_join(p, name, code, password, rejoin_code):
     p.name = clean_name(name, p.pid)
-    r, err = find_room(code, password, p.name)
+    r, err = find_room(code, password, p.name, rejoin_code)
     if err:
         await send_error(p, err)
         return
-    if r.grace_task and r.pending_name == p.name:
+    in_grace = r.grace_task is not None
+    is_rejoin = False
+    if in_grace and rejoin_code and r.rejoin_code and rejoin_code == r.rejoin_code:
+        is_rejoin = True
+    elif in_grace and r.pending_name == p.name and not r.rejoin_code:
+        is_rejoin = True
+    if is_rejoin:
         await seat_reconnect(r, p)
     else:
         await seat_player(r, p)
@@ -537,7 +561,8 @@ async def dispatch(p, msg):
         if not code or (isinstance(code, str) and not code.strip()):
             await cmd_auto(p, msg.get("name", ""))
         else:
-            await cmd_join(p, msg.get("name", ""), code, msg.get("password"))
+            await cmd_join(p, msg.get("name", ""), code,
+                           msg.get("password"), msg.get("rejoin_code"))
     elif t == "auto":
         await cmd_auto(p, msg.get("name", ""))
     elif t == "move":
