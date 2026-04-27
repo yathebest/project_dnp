@@ -1,7 +1,0 @@
-Spawning 4 clients across 2 rooms, 5 rounds each…
-
-Finished in 2.05s
-
-Latency report (milliseconds):
-  RTT (client ping->pong)      n=12    min=  0.00  p50=  1.00  p95= 31.00  p99= 31.00  max= 31.00  avg=  8.17
-  Move RTT (move->state)       n=83    min=  0.24  p50=  0.57  p95=  0.81  p99=  0.88  max=  1.04  avg=  0.58
